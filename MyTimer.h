@@ -17,8 +17,20 @@ typedef struct {
  */
 void MyTimer_Base_Init( TIM_TypeDef * Timer, unsigned short ARR , unsigned short PSC ) ;
 
-#define MyTimer_Base_Start ( Timer ) ( . . . )
-#define MyTimer_Base_Stop ( Timer ) ( . . . )
+
+#define MyTimer_Base_Start(Timer) (Timer->CR1 |= TIM_CR1_CEN)
+#define MyTimer_Base_Stop(Timer) (Timer->CR1 &= ~(TIM_CR1_CEN))
+
+
+/**************************************************************************************************
+ * @brief 
+ * @param Timer: TIM_TypeDef* - Timer concerned
+ * @param PriO: char - Priority from 0 to 15
+ * @note: This function MyTimer_Base_Init does the initialization to make the timer available
+ **************************************************************************************************/
+void MyTimer_ActiveIT(TIM_TypeDef *Timer, char Prio);
+
+
 
 #endif
 

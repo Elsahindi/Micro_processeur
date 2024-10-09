@@ -52,13 +52,32 @@ int main ( void )
 	
 	#ifdef TIMERTP2
 	
+	MyGPIO_Init(GPIOA, 5, Out_PP); // LED
 	
 	// SET UP clock 500ms
-	MyTimer_Base_Init(TIM1, 4999, 7199);
+	//MyTimer_Base_Init(TIM1, 4999, 7199);
+	MyTimer_Base_Init(TIM2, 4999, 7199);
+	//MyTimer_Base_Init(TIM3, 4999, 7199);
+	//MyTimer_Base_Init(TIM4, 4999, 7199);
 	
-	while(1){
+	// Start timer
+	//MyTimer_Base_Start(TIM1);
+	MyTimer_Base_Start(TIM2);
+	//MyTimer_Base_Start(TIM3);
+	//MyTimer_Base_Start(TIM4);
 	
-	}
+	MyTimer_ActiveIT(TIM2, 0);
 	
 	#endif
+	
+	while(1){
+		
+	}
+	
+}
+
+
+void TIM2_IRQHandler(void){
+		TIM2->SR &= ~(TIM_SR_UIF);
+		MyGPIO_Toggle(GPIOA, 5);
 }

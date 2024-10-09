@@ -31,22 +31,17 @@ void MyGPIO_Init(GPIO_TypeDef *GPIO, uint8_t GPIO_Pin, uint8_t GPIO_Conf){
 
 // READ VALUE = Returns if pin at 1 or 0
 int MyGPIO_Read(GPIO_TypeDef *GPIO, uint8_t GPIO_Pin){
-	return (GPIO->IDR & (0b1111<<GPIO_Pin * 4)); // GPIO->IDR & (0x1<<13) return either 1 or 0
+	return (GPIO->IDR & (0b1<<GPIO_Pin)); // GPIO->IDR & (0x1<<13) return either 1 or 0
 }
 
 // TURN ON = Sets pin at 1 or 0
 void MyGPIO_Set(GPIO_TypeDef *GPIO, uint8_t GPIO_Pin){
-		GPIO->ODR |= (0b1111<<GPIO_Pin * 4);
+		GPIO->ODR |= (0b1<<GPIO_Pin);
 }
 
 // TURN OFF = reset pin to 0 
 void MyGPIO_Reset(GPIO_TypeDef *GPIO, uint8_t GPIO_Pin){
-	if (GPIO_Pin < 8){
-		GPIO->CRL &= ~(0b1111<<GPIO_Pin * 4) ;
-	}
-	else{
-		GPIO->CRH &= ~(0b1111<<(GPIO_Pin-8) * 4) ;
-	}
+	GPIO->ODR &= ~(0b1<<GPIO_Pin);
 }
 
 // Alternate state
