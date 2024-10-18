@@ -6,6 +6,12 @@
 //#define GPIOTP1
 #define TIMERTP2
 
+
+void usage_function() {
+	MyGPIO_Toggle(GPIOA, 5);
+}
+
+
 int main ( void )
 {
 	// TESTS
@@ -66,8 +72,9 @@ int main ( void )
 	//MyTimer_Base_Start(TIM3);
 	//MyTimer_Base_Start(TIM4);
 	
-	MyTimer_ActiveIT(TIM2, 0);
 	
+	//MyTimer_ActiveIT(TIM2, 0, usage_function);
+	MyTimer_PWM(TIM2,1);
 	#endif
 	
 	while(1){
@@ -77,7 +84,5 @@ int main ( void )
 }
 
 
-void TIM2_IRQHandler(void){
-		TIM2->SR &= ~(TIM_SR_UIF);
-		MyGPIO_Toggle(GPIOA, 5);
-}
+	
+

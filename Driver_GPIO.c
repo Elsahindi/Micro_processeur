@@ -22,10 +22,12 @@ void MyGPIO_Init(GPIO_TypeDef *GPIO, uint8_t GPIO_Pin, uint8_t GPIO_Conf){
 	// reset 
 	MyGPIO_Reset(GPIO, GPIO_Pin);
 	if (GPIO_Pin < 8){
-		GPIO->CRL |= (GPIO_Conf<<GPIO_Pin * 4);
+		GPIO->CRL &= ~((0b1111)<<(GPIO_Pin * 4)); 
+		GPIO->CRL |= (GPIO_Conf<<(GPIO_Pin * 4));
 	}
 	else{
-		GPIO->CRH |= (GPIO_Conf<<(GPIO_Pin-8) * 4);
+		GPIO->CRH &= ~((0b1111)<<((GPIO_Pin-8) * 4)); 
+		GPIO->CRH |= (GPIO_Conf<<((GPIO_Pin-8) * 4));
 	}
 }
 
